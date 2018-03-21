@@ -25,4 +25,27 @@ namespace ColorViewer
             InitializeComponent();
         }
     }
+
+    public class ColorConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type type, object parameter, 
+            System.Globalization.CultureInfo culture)
+        {
+            if (values.Length < 4) return Colors.White;
+
+            // unboxing
+            double alpha = (double)values[0];
+            double red = (double)values[1];
+            double green = (double)values[2];
+            double blue = (double)values[3];
+            // return BRUSH
+            return new SolidColorBrush(Color.FromArgb((byte)alpha, (byte)red, (byte)green, (byte)blue));
+        }
+
+        public object[] ConvertBack(object value, Type[] types, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException(); // 今回は実装しない
+        }
+    }
 }
